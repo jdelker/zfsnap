@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # This file is licensed under the BSD-3-Clause license.
 # See the AUTHORS and LICENSE files for more information.
@@ -6,6 +6,8 @@
 # website:          http://www.zfsnap.org
 # repository:       https://github.com/zfsnap/zfsnap
 # bug tracking:     https://github.com/zfsnap/zfsnap/issues
+
+#ZFSNAP_LIB_DIR=`dirname $0`/../share/zfsnap
 
 # A best attempt is made here to find where zfsnap is actually located.
 # If you install zfsnap in less common ways this may might not find it.
@@ -15,7 +17,8 @@ if [ -z "$ZFSNAP_LIB_DIR" ]; then
     ZFSNAP_SCRIPT=$0
     while [ -h "$ZFSNAP_SCRIPT" ]; do
         LS_OUT=`/bin/ls -l "$ZFSNAP_SCRIPT"`
-        ZFSNAP_SCRIPT="${LS_OUT##*-> }"
+        LINK_TARGET="${LS_OUT##*-> }"
+        ZFSNAP_SCRIPT="${LINK_TARGET/../`dirname $0`/..}"
     done
 
     [ -z "${ZFSNAP_SCRIPT##*/*}" ] && ZFSNAP_SCRIPT_DIR="${ZFSNAP_SCRIPT%/*}" || ZFSNAP_SCRIPT_DIR='.'
